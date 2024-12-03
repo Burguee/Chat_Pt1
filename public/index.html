@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <ul id="messages">
+        
+    </ul>
+    <form action="" id="form">
+        <input type="text" id="input">
+        <button>Enviar</button>
+    </form>
+    <form action="" id="form_nickname">
+        <input type="text" id="input_nickname">
+        <button>Trocar nickname</button>        
+    </form>
+    <script src="https://cdn.socket.io/4.8.0/socket.io.min.js"></script>
+    <script>
+        const socket = io()
+         // Lado do cliente
+        const form = document.getElementById("form")
+        const input = document.getElementById("input")
+        const messages = document.getElementById("messages")
+        const form_nickname = document.getElementById("form_nickname")
+        const input_nickname = document.getElementById("input_nickname")
+
+        form.addEventListener('submit', function(e) {
+            e.preventDefault()
+            if(input.value) {
+                socket.emit('chat', input.value)
+                input.value = ''
+            }
+        })
+
+        form_nickname.addEventListener('submit', function(e) {
+            e.preventDefault()
+            if(input_nickname){
+                socket.emit('trocaNickname', input_nickname.value)
+                input_nickname.value = ''
+            }
+        })
+
+        socket.on(`chat`, function(msg, nickname) {
+            var item = document.createElement('li') // <li></li>
+            item.textContent = nickname + ': ' + msg // <li>nickname: Boa tarde</li>
+            messages.appendChild(item)
+            
+        })
+    </script>
+</body>
+</html>
