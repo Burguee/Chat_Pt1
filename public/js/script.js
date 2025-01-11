@@ -91,7 +91,7 @@ messageInput.addEventListener("keypress", (event) => {
 })
 
 socket.on('chat', (msg, nickname) => {
-    displayMessage(`<span class="username">${nickname}: </span>${msg}`)
+    displayMessage(`<span class="username">${nickname}</span> falou: ${msg}`)
 })
 
 socket.on('changeNickname', (nickname) => {
